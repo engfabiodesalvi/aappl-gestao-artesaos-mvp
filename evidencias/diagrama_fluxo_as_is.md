@@ -1,3 +1,4 @@
+```
 [Artesão chega à feira]
           │
           ▼
@@ -16,3 +17,4 @@
           │
           ▼
 [Repasse financeiro em dinheiro aos artesãos após 2 horas de fechamento]
+```
