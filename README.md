@@ -9,6 +9,26 @@ Sistema web responsivo (*mobile-first*) desenvolvido para automatizar o controle
 
 ---
 
+## Stack
+Java 21 • Spring Boot 3.2 • Spring Security (BCrypt) • Thymeleaf • Spring Data JPA • PostgreSQL • JUnit 5 • GitHub Actions
+
+## Como executar
+Pré-requisitos: JDK 21, PostgreSQL ativo.
+
+    git clone https://github.com/engfabiodesalvi/aappl-gestao-artesaos-mvp.git
+    cd aappl-gestao-artesaos-mvp
+    export DB_URL=jdbc:postgresql://localhost:5432/aappl_mvp
+    export DB_USERNAME=aappl
+    export DB_PASSWORD=sua_senha
+    ./mvnw spring-boot:run
+
+Acesse http://localhost:8080
+
+## Testes
+    ./mvnw verify
+    
+---
+
 ## 🎯 Problema e Impacto Social (ODS 8 — Meta 8.3)
 
 Atualmente, o fechamento de caixa das feiras da AAPPL demanda cerca de **1h45min de conferência manual**, gerando riscos de divergência no estoque consignado e atrasos nos repasses aos **45 artesãos associados**. 
@@ -67,4 +87,5 @@ aappl-gestao-artesaos-mvp/
 │       └── java/br/org/aappl/mvp/  # Testes unitários (JUnit 5) e de integração (MockMvc)
 ├── .gitignore
 ├── pom.xml
-└── README.md'
+└── README.md
+```
