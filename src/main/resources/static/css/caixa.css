@@ -1,0 +1,32 @@
+.acoes { display: flex; gap: 8px; }
+.acoes form { margin: 0; }
+.lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.linha { display: flex; justify-content: space-between; gap: 8px; }
+.sub { margin: 2px 0 8px; font-size: .95rem; color: var(--mut); }
+
+.esgotado { background: var(--off); border-style: dashed; }
+.esgotado .sub { color: #3C4640; font-weight: 700; }
+
+.qtd { display: flex; justify-content: flex-end; align-items: center; gap: 12px; }
+.qtd button {
+  width: 48px; height: 48px; border: 2px solid var(--g); border-radius: 10px;
+  background: #fff; color: var(--g); font: inherit; font-size: 1.5rem; font-weight: 700; cursor: pointer;
+}
+.qtd button:disabled { border-color: #9AA39D; color: #6E7771; background: var(--off); cursor: not-allowed; }
+.num {
+  width: 48px; border: 0; background: transparent; text-align: center;
+  font: inherit; font-size: 1.15rem; font-weight: 700; color: var(--ink);
+}
+
+.pagamento { border: 0; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.pagamento legend { font-weight: 700; margin-bottom: 6px; padding: 0; }
+.pagamento label { position: relative; }
+.pagamento input { position: absolute; opacity: 0; }
+.pagamento span {
+  display: flex; align-items: center; justify-content: center; min-height: 52px;
+  border: 2px solid var(--line); border-radius: 10px; background: #fff; font-weight: 700;
+}
+.pagamento input:checked + span { background: var(--g); border-color: var(--g); color: #fff; }
+.pagamento input:focus-visible + span { outline: 3px solid #0B5FFF; outline-offset: 2px; }
+
+.total { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.15rem; margin-top: auto; }

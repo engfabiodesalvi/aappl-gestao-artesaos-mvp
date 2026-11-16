@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/base :: head('Fechamento')}"></head>
+<body>
+<link rel="stylesheet" th:href="@{/css/fechamento.css}">
+<div class="app">
+
+  <header class="barra">
+    <a th:href="@{/caixa}">← Caixa</a>
+    <h1>Fechamento da feira</h1>
+  </header>
+
+  <main class="conteudo">
+
+    <div class="alerta alerta-ok" role="status" th:if="${r.conferido}">
+      <span aria-hidden="true">✔</span>
+      <div>
+        <span>Estoque e caixa conferidos, sem divergências</span><br>
+        <small th:text="'Feira Comunitária • ' + ${#temporals.format(r.data,'dd/MM/yyyy')}"></small>
+      </div>
+    </div>
+    <div class="alerta alerta-erro" role="alert" th:unless="${r.conferido}">
+      <span aria-hidden="true">⚠</span>
+      <span>Divergência entre itens vendidos e total do caixa. Revise as vendas.</span>
+    </div>
+
+    <section class="kpis" aria-label="Resumo financeiro">
+      <div class="kpi">
+        <small>Total bruto</small>
+        <strong th:text="'R$ ' + ${#numbers.formatDecimal(r.bruto,1,'POINT',2,'COMMA')}">R$ 0,00</strong>
+      </div>
+      <div class="kpi">
+        <small>Taxa (10%)</small>
+        <strong th:text="'R$ ' + ${#numbers.formatDecimal(r.taxa,1,'POINT',2,'COMMA')}">R$ 0,00</strong>
+      </div>
+      <div class="kpi destaque">
+        <small>Líquido a repassar</small>
+        <strong th:text="'R$ ' + ${#numbers.formatDecimal(r.liquido,1,'POINT',2,'COMMA')}">R$ 0,00</strong>
+      </div>
+    </section>
+
+    <h2>Repasses individuais aos produtores</h2>
+    <p class="vazio" th:if="${#lists.isEmpty(r.repasses)}">Nenhuma venda registrada nesta data.</p>
+
+    <ul class="lista">
+      <li class="card" th:each="p : ${r.repasses}">
+        <strong class="nome" th:text="${p.nome}">Produtor</strong>
+        <span class="pix" th:text="'Chave PIX: ' + ${p.chavePix}">PIX</span>
+        <div class="linha">
+          <span th:text="'Vendidos: ' + ${p.itens} + (${p.itens} == 1 ? ' item' : ' itens')"></span>
+          <span>Repasse: <strong th:text="'R$ ' + ${#numbers.formatDecimal(p.valor,1,'POINT',2,'COMMA')}"></strong></span>
+        </div>
+      </li>
+    </ul>
+
+    <form th:action="@{/logout}" method="post" class="sair">
+      <button class="btn btn-sec" type="submit">Encerrar turno e sair do sistema</button>
+    </form>
+  </main>
+</div>
+</body>
+</html>
