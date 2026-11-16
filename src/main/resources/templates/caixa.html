@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/base :: head('Frente de Caixa')}"></head>
+<body>
+<link rel="stylesheet" th:href="@{/css/caixa.css}">
+<div class="app">
+
+  <header class="barra">
+    <h1>AAPPL Caixa</h1>
+    <nav class="acoes">
+      <a th:href="@{/fechamento}" sec:authorize="hasRole('COORDENADORA')">Fechamento</a>
+      <form th:action="@{/logout}" method="post">
+        <button type="submit">Sair</button>
+      </form>
+    </nav>
+  </header>
+
+  <form th:action="@{/caixa/finalizar}" method="post" class="conteudo" id="form-caixa">
+
+    <div class="campo">
+      <label for="busca">Buscar produto ou artesão</label>
+      <input id="busca" type="search" placeholder="Ex: Geleia, Cesto ou Dona Clara"
+cat > $R/templates/caixa.html <<'EOF'
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/base :: head('Frente de Caixa')}"></head>
+<body>
+<link rel="stylesheet" th:href="@{/css/caixa.css}">
+<div class="app">
+
+  <header class="barra">
+    <h1>AAPPL Caixa</h1>
+    <nav class="acoes">
+      <a th:href="@{/fechamento}" sec:authorize="hasRole('COORDENADORA')">Fechamento</a>
+      <form th:action="@{/logout}" method="post">
+        <button type="submit">Sair</button>
+      </form>
+    </nav>
+  </header>
+
+  <form th:action="@{/caixa/finalizar}" method="post" class="conteudo" id="form-caixa">
+
+    <div class="campo">
+      <label for="busca">Buscar produto ou artesão</label>
+      <input id="busca" type="search" placeholder="Ex: Geleia, Cesto ou Dona Clara" autocomplete="off">
+    </div>
+
+    <div class="alerta alerta-ok" role="status" th:if="${sucesso}">
+      <span aria-hidden="true">✔</span><span th:text="${sucesso}"></span>
+    </div>
+    <div class="alerta alerta-erro" role="alert" th:if="${erro}">
+      <span aria-hidden="true">⚠</span><span th:text="${erro}"></span>
+    </div>
+
+    <ul class="lista">
+      <li th:each="p : ${produtos}" class="card item"
+          th:classappend="${p.esgotado} ? 'esgotado'"
+          th:attr="data-busca=${#strings.toLowerCase(p.nome + ' ' + p.artesao.nome)},data-preco=${p.preco},data-max=${p.estoque}">
+
+        <div class="linha">
+          <strong th:text="${p.nome}">Produto</strong>
+          <strong th:text="'R$ ' + ${#numbers.formatDecimal(p.preco,1,'POINT',2,'COMMA')}">R$ 0,00</strong>
+        </div>
+
+        <p class="sub" th:if="${!p.esgotado}"
+           th:text="'Produtor(a): ' + ${p.artesao.nome} + ' • Estoque: ' + ${p.estoque} + ' un.'"></p>
+        <p class="sub" th:if="${p.esgotado}">
+          <span th:text="'Produtor(a): ' + ${p.artesao.nome} + ' • '"></span>⛔ Estoque esgotado
+        </p>
+
+        <div class="qtd" th:if="${!p.esgotado}">
+          <button type="button" data-delta="-1" aria-label="Diminuir quantidade" disabled>−</button>
+          <input type="number" class="num" readonly value="0"
+                 th:name="|quantidades[${p.id}]|" aria-label="Quantidade">
+          <button type="button" data-delta="1" aria-label="Aumentar quantidade">+</button>
+        </div>
+      </li>
+    </ul>
+
+    <fieldset class="pagamento">
+      <legend>Forma de pagamento *</legend>
+      <label><input type="radio" name="forma" value="PIX" checked><span>PIX</span></label>
+      <label><input type="radio" name="forma" value="DINHEIRO"><span>Dinheiro</span></label>
+      <label><input type="radio" name="forma" value="CARTAO"><span>Cartão</span></label>
+    </fieldset>
+
+    <div class="total">
+      <span>Total da venda</span>
+      <span id="total" aria-live="polite">R$ 0,00 (0 itens)</span>
+    </div>
+    <button class="btn" type="submit" id="finalizar" disabled>Finalizar venda e baixar estoque</button>
+  </form>
+</div>
+<script th:src="@{/js/caixa.js}"></script>
+</body>
+</html>
