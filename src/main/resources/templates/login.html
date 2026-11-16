@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/base :: head('Acesso')}"></head>
+<body>
+<link rel="stylesheet" th:href="@{/css/login.css}">
+<main class="app">
+  <div class="conteudo">
+    <div class="marca">
+      <div class="logo" aria-hidden="true">AA</div>
+      <div>
+        <strong>AAPPL — Gestão de Feiras</strong>
+        <span>Feira Comunitária, edição atual</span>
+      </div>
+    </div>
+
+    <h1>Acesso restrito à equipe da feira</h1>
+    <p class="intro">Identifique-se para liberar o balcão de vendas.</p>
+
+    <form th:action="@{/login}" method="post" class="form">
+      <div class="campo">
+        <label for="username">Usuário ou e-mail *</label>
+        <input id="username" name="username" type="text" required
+               autocomplete="username" placeholder="voluntario.balcao@aappl.org.br">
+      </div>
+
+      <div class="campo">
+        <label for="password">Senha *</label>
+        <div class="com-botao">
+          <input id="password" name="password" type="password" required
+                 autocomplete="current-password">
+          <button type="button" id="ver" aria-label="Mostrar senha">Ver</button>
+        </div>
+      </div>
+
+      <div class="alerta alerta-erro" role="alert" th:if="${param.erro}">
+        <span aria-hidden="true">⚠</span>
+        <span>Usuário ou senha inválidos. Verifique os dados digitados e tente novamente.</span>
+      </div>
+      <div class="alerta alerta-ok" role="status" th:if="${param.saiu}">
+        <span aria-hidden="true">✔</span>
+        <span>Turno encerrado com segurança.</span>
+      </div>
+
+      <button class="btn" type="submit">Entrar no frente de caixa</button>
+    </form>
+
+    <p class="rodape">Conexão segura (HTTPS) • Versão MVP 1.0</p>
+  </div>
+</main>
+<script th:src="@{/js/login.js}"></script>
+</body>
+</html>
